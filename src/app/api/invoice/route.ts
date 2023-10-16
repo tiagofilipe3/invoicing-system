@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { TInvoice } from '@/app/api/invoices/types'
 
-let data = require('../../../../data.json')
+let data = require('../../../../tmp/data.json')
 
 export async function GET(request: NextRequest) {
   try {

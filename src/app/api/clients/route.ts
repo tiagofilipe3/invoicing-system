@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { TClient } from '@/app/api/clients/types'
 
-let data = require('../../../../data.json')
+let data = require('../../../../tmp/data.json')
 
 export async function GET() {
   try {
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       clients && clients.length > 0 ? clients[clients.length - 1].id + 1 : 1
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({
         ...data,
         clients: [...clients, { id: newId, ...client }],
@@ -50,7 +50,7 @@ export async function PUT(request: Request) {
     })
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({ ...data, clients: newClients })
     )
 
@@ -71,7 +71,7 @@ export async function DELETE(request: Request) {
     )
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({ ...data, clients: newClients })
     )
 

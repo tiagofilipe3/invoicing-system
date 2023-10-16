@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { TClient } from '@/app/api/clients/types'
-let data = require('../../../../data.json')
+let data = require('../../../../tmp/data.json')
 
 export async function GET(request: NextRequest) {
   try {

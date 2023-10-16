@@ -1,7 +1,7 @@
 import { TInvoice, TItem } from '@/app/api/invoices/types'
 import { NextRequest } from 'next/server'
 import { TData } from '@/app/api/types'
-let data = require('../../../../data.json')
+let data = require('../../../../tmp/data.json')
 
 const fs = require('fs')
 
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     }
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({ ...data, invoices: [...invoices, newInvoice] })
     )
 
@@ -80,7 +80,7 @@ export async function PUT(request: Request) {
     })
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({ ...data, invoices: newInvoices })
     )
 
@@ -101,7 +101,7 @@ export async function DELETE(request: Request) {
     )
 
     fs.writeFileSync(
-      'data.json',
+      'tmp/data.json',
       JSON.stringify({ ...data, invoices: newInvoices })
     )
 
