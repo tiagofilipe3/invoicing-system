@@ -4,8 +4,7 @@ import { Button, Flex, Text } from '@chakra-ui/react'
 import FormInput from '@/app/components/FormInput'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import { getClient } from '@/app/api/client/route'
+import { useCallback, useEffect } from 'react'
 
 type ClientInputs = {
   name: string
@@ -27,17 +26,22 @@ const ClientForm = ({ id }: TProps) => {
     reset,
   } = useForm<ClientInputs>()
 
+  const fetchClient = useCallback(async () => {
+    const req = await fetch(`/api/client?id=${id}`)
+    const client = await req.json()
+    reset(client)
+  }, [id, reset])
+
   useEffect(() => {
     if (id) {
-      const client = getClient(id)
-      reset(client)
+      fetchClient()
     }
-  }, [id, reset])
+  }, [fetchClient, id, reset])
 
   const onSubmitClient: SubmitHandler<ClientInputs> = async (data) => {
     if (id) {
       try {
-        await fetch(`/api/client`, {
+        await fetch(`/api/clients`, {
           method: 'PUT',
           body: JSON.stringify({
             ...data,
@@ -53,7 +57,7 @@ const ClientForm = ({ id }: TProps) => {
       }
     }
 
-    await fetch('/api/client', {
+    await fetch('/api/clients', {
       method: 'POST',
       body: JSON.stringify({
         ...data,

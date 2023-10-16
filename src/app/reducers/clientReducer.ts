@@ -1,4 +1,4 @@
-import { TClient } from '@/app/api/client/types'
+import { TClient } from '@/app/api/clients/types'
 
 type Set = {
   type: 'SET_CLIENTS'

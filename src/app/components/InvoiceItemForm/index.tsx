@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import FormInput from '@/app/components/FormInput'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { TItem } from '@/app/api/invoice/types'
+import { TItem } from '@/app/api/invoices/types'
 
 type TProps = {
   isOpen: boolean

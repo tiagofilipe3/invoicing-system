@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { ColumnDefinitionType } from '@/app/components/Table/types'
 import Table from '@/app/components/Table'
-import { TInvoice } from '@/app/api/invoice/types'
+import { TInvoice } from '@/app/api/invoices/types'
 import { currencyFormatter } from '@/app/utils'
 import { invoiceReducer } from '@/app/reducers'
 
@@ -65,7 +65,7 @@ const InvoiceList = ({ status }: { status: string }) => {
 
   const fetchInvoices = useCallback(async () => {
     setIsLoading(true)
-    const req = await fetch(`api/invoice?status=${status}`, {
+    const req = await fetch(`api/invoices?status=${status}`, {
       method: 'GET',
     })
     const invoices = await req.json()
@@ -83,7 +83,7 @@ const InvoiceList = ({ status }: { status: string }) => {
   }, [fetchInvoices, status])
 
   const deleteInvoice = async (id: number) => {
-    await fetch(`/api/invoice`, {
+    await fetch(`/api/invoices`, {
       method: 'DELETE',
       body: JSON.stringify({
         id,
@@ -96,7 +96,7 @@ const InvoiceList = ({ status }: { status: string }) => {
   const markAsPaid = async (invoice: TInvoice) => {
     invoice.status = true
 
-    await fetch(`/api/invoice`, {
+    await fetch(`/api/invoices`, {
       method: 'PUT',
       body: JSON.stringify({
         ...invoice,

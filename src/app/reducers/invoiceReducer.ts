@@ -1,4 +1,4 @@
-import { TInvoice } from '@/app/api/invoice/types'
+import { TInvoice } from '@/app/api/invoices/types'
 
 type Set = {
   type: 'SET_INVOICES'

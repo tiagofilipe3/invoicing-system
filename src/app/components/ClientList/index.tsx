@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { clientReducer } from '@/app/reducers'
 import { ColumnDefinitionType } from '@/app/components/Table/types'
-import { TClient } from '@/app/api/client/types'
+import { TClient } from '@/app/api/clients/types'
 import Table from '@/app/components/Table'
 import { Box, Button } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -37,7 +37,7 @@ const ClientList = () => {
 
   const fetchClients = async () => {
     setIsLoading(true)
-    const req = await fetch(`api/client`, {
+    const req = await fetch(`api/clients`, {
       method: 'GET',
     })
     const clients = await req.json()
@@ -47,7 +47,7 @@ const ClientList = () => {
   }
 
   const deleteInvoice = async (id: number) => {
-    await fetch(`/api/client`, {
+    await fetch(`/api/clients`, {
       method: 'DELETE',
       body: JSON.stringify({
         id,

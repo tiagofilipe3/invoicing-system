@@ -1,17 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { Button, Flex, IconButton, Text, useDisclosure } from '@chakra-ui/react'
 
 import InvoiceItemForm, { TItem } from '@/app/components/InvoiceItemForm'
 import FormInput from '@/app/components/FormInput'
-import { getInvoice } from '@/app/api/invoice/route'
 import { currencyFormatter } from '@/app/utils'
-import { TClient } from '@/app/api/client/types'
+import { TClient } from '@/app/api/clients/types'
 import FormSelect from '@/app/components/FormSelect'
-import { getClients } from '@/app/api/client/route'
 import { AiFillDelete } from 'react-icons/ai'
 
 type InvoiceInputs = {
@@ -37,16 +35,23 @@ const InvoiceForm = ({ id }: TProps) => {
     reset,
   } = useForm<InvoiceInputs>()
 
-  useEffect(() => {
+  const fetchInvoice = useCallback(async () => {
     if (id) {
-      const invoice = getInvoice(id)
+      const req = await fetch(`/api/invoice?id=${id}`)
+      const invoice = await req.json()
+
       setItems(invoice.items)
       reset(invoice)
     }
   }, [id, reset])
 
+  useEffect(() => {
+    fetchInvoice()
+  }, [fetchInvoice])
+
   const fetchClients = async () => {
-    const clients = await getClients()
+    const req = await fetch('../api/clients')
+    const clients = await req.json()
 
     const selectClients = clients.map((client: TClient) => ({
       value: client.id,
@@ -67,7 +72,7 @@ const InvoiceForm = ({ id }: TProps) => {
     }
 
     if (id) {
-      await fetch(`/api/invoice`, {
+      await fetch(`/api/invoices`, {
         method: 'PUT',
         body: JSON.stringify({
           ...data,
@@ -81,7 +86,7 @@ const InvoiceForm = ({ id }: TProps) => {
       return
     }
 
-    await fetch('/api/invoice', {
+    await fetch('/api/invoices', {
       method: 'POST',
       body: JSON.stringify({
         ...data,
