@@ -11,6 +11,7 @@ type TInvoice = {
   total: number
   status: boolean
   items: TItem[]
+  actions: string
 }
 
 type NewInvoice = {

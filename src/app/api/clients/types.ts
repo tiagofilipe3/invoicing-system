@@ -3,6 +3,7 @@ type TClient = {
   name: string
   email: string
   address: string
+  actions: string
 }
 
 export type { TClient }

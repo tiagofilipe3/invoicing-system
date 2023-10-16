@@ -1,5 +1,5 @@
 type ColumnDefinitionType<T, K extends keyof T> = {
-  key: K | 'actions'
+  key: K
   header: string
   render?: (value: T) => any
   width?: string
