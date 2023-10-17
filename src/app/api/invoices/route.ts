@@ -19,7 +19,9 @@ export async function GET(request: NextRequest) {
     }
 
     const invoicesWithClients = invoices.map((item: TInvoice) => {
-      const client = clients.find((client) => client.id === item.client)
+      const client = clients.find(
+        (client) => Number(client.id) === Number(item.client)
+      )
       return { ...item, client: client?.name }
     })
 
@@ -43,14 +45,16 @@ export async function POST(request: Request) {
       0
     )
 
-    const client = clients.find((item: TInvoice) => item.id === rest.client)
+    const client = clients.find(
+      (item: TInvoice) => item.id === Number(rest.client)
+    )
 
     const newInvoice = {
       id: newId,
       total,
       status: false,
       items,
-      client: client.id,
+      client: Number(client.id),
       ...rest,
     }
 
